@@ -1,0 +1,28 @@
+---
+interface Props { lang: 'en' | 'es'; title: string; description: string }
+const { lang, title, description } = Astro.props;
+const origin = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const prefix = import.meta.env.BASE_URL.replace(/\/$/, '');
+const enUrl = `${origin}${prefix}/`;
+const esUrl = `${origin}${prefix}/es/`;
+const currentUrl = lang === 'en' ? enUrl : esUrl;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F7F5F2" />
+    <title>{title} | Paulina</title>
+    <link rel="canonical" href={currentUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <meta property="og:title" content={`${title} | Paulina`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+  </head>
+  <body><slot /></body>
+</html>

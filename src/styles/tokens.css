@@ -1,0 +1,52 @@
+/* Paulina Loera — centralized brand palette */
+:root {
+  --ivory: #F7F5F2;
+  --sand: #DCC9B9;
+  --peach: #F1D7C8;
+  --peach-soft: #F3E7E0;
+  --script-on-light: #93475C;
+  --script-on-photo: #F7F5F2;
+  --script-shadow: rgba(9, 37, 58, .8);
+  --terra: #B75D70;
+  --teal: #1F6B6B;
+  --teal-deep: #1F6264;
+  --charcoal: #2E2E2E;
+  --ink: #09253A;
+  --ink-heading: #102D3E;
+  --red: #db4264;
+  --text-muted: #52616A;
+  --text-body: #596571;
+  --white: #FFFFFF;
+  --ivory-rgb: 247, 245, 242;
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body: Montserrat, Arial, sans-serif;
+  --font-script: "Alex Brush", cursive;
+
+  /* Semantic and supporting colors — edit here, not in component styles */
+  --accent-primary: var(--red);
+  --accent-hover: #AC3150;
+  --accent-soft: #F2C5B7;
+  --contact-foreground: #FFF9F1;
+  --contact-body: #F4E7DD;
+  --heading-eyebrow: var(--red);
+  --hero-lead: #455561;
+  --about-body: #4d5861;
+  --border-soft: #d9d3ce;
+  --border-legal: #ded6cf;
+  --logo-monogram: #e8d9cc;
+  --media-blush: #f0c9ba;
+  --media-sand: #e5d2c2;
+  --media-mist: #d9e5df;
+  --media-gold: #b88743;
+  --quick-icon-warm: #ed981d;
+  --quote-rule: rgba(130, 104, 93, .22);
+  --header-rule: rgba(16, 45, 62, 0.08);
+  --polaroid-shadow: rgba(28, 38, 42, 0.13);
+  --polaroid-shadow-hover: rgba(28, 38, 42, 0.2);
+  --language-separator: #AAA;
+  --mobile-nav-shadow: #0002;
+
+  --button-bg: var(--red);
+  --button-hover: var(--teal);
+  --button-text: var(--white);
+}

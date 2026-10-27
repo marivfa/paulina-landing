@@ -1,0 +1,6 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Home from '../components/Home.astro';
+import { content } from '../data/content';
+---
+<BaseLayout lang="en" title="Real Estate, Notary & Lifestyle" description={content.en.hero.description}><Home lang="en" /></BaseLayout>

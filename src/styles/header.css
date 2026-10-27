@@ -1,0 +1,33 @@
+.header{height:var(--header-height);display:flex;align-items:center;justify-content:space-between;gap:1.1rem;position:relative;z-index:10}
+
+.header-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+
+  background: rgba(var(--ivory-rgb), 0.97);
+  border-bottom: 1px solid var(--header-rule);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Logo editorial: sobresale visualmente del header hacia el Hero. */
+.wordmark{width:210px;height:84px;flex:none;display:block;position:relative;overflow:visible;z-index:11}
+.wordmark img{position:absolute;top:9px;left:0;width:200px;height:130px;max-width:none;object-fit:contain;object-position:center;display:block}
+.wordmark .media-fallback{height:66px;min-height:0;width:100%;background:transparent;overflow:visible}
+.wordmark .media-fallback:after{content:'PL';position:absolute;border:0;width:auto;height:auto;inset:auto;left:25%;top:-22px;transform:none;font:80px/1 'Playfair Display',serif;color:var(--logo-monogram);opacity:.8}
+.wordmark .media-fallback span{font:3rem/.9 Alex Brush,cursive;color:var(--red);padding:0;z-index:1;transform:rotate(-8deg)}
+.desktop-nav{display:flex;gap:clamp(.8rem,1.8vw,1.8rem);align-items:center}
+.desktop-nav a,.footer nav a{font-size:.68rem;letter-spacing:.04em}
+.desktop-nav a:hover,.footer nav a:hover{color:var(--red)}
+.header-actions{display:flex;align-items:center;gap:1.3rem}
+.language-switch{display:flex;gap:6px;font-size:.68rem}
+.language-switch span{color:var(--language-separator)}
+.language-switch a{opacity:.55}
+.language-switch a.active{color:var(--red);font-weight:700;opacity:1}
+.pill{background:var(--teal);color:var(--white);padding:.74rem 1.15rem;border-radius:25px;font-size:.63rem;letter-spacing:.12em;font-weight:700;white-space:nowrap}
+.mobile-nav{display:none}

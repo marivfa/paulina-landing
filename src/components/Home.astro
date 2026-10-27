@@ -1,0 +1,152 @@
+---
+import Media from './Media.astro';
+import '../styles/site.css';
+import { content } from '../data/content';
+import { site } from '../data/site';
+import { sectionIds } from '../data/navigation';
+interface Props {lang:'en'|'es'}
+const {lang}=Astro.props;
+const c=content[lang];
+const base=import.meta.env.BASE_URL.replace(/\/$/,'');
+const media=site.media;
+---
+<a class="skip" href="#main">{lang==='en'?'Skip to content':'Saltar al contenido'}</a>
+<div class="header-wrap">
+<header class="header shell">
+  <a class="wordmark" href={lang === 'en' ? `${base}/` : `${base}/es/`} aria-label="Paulina — home"><Media media={{type:'image',src:site.brand.logo,alt:'Paulina logo'}} fallback="Paulina"/></a>
+  <nav class="desktop-nav" aria-label={lang==='en'?'Main navigation':'Navegación principal'}>{c.nav.map((item,i)=><a href={`#${sectionIds[i]}`}>{item}</a>)}</nav>
+  <div class="header-actions"><div class="language-switch" aria-label="Select language"><a href={`${base}/`} lang="en" hreflang="en" aria-current={lang === 'en' ? 'page' : undefined} class:list={{active:lang==='en'}}>EN</a><span aria-hidden="true">/</span><a href={`${base}/es/`} lang="es" hreflang="es" aria-current={lang === 'es' ? 'page' : undefined} class:list={{active:lang==='es'}}>ES</a></div><a class="pill" href="#contact">{lang==='en'?"LET'S CONNECT":"CONECTEMOS"} <span aria-hidden="true">→</span></a></div>
+  <details class="mobile-nav"><summary aria-label={lang==='en'?'Open navigation':'Abrir navegación'}>☰ <span>Menu</span></summary><nav aria-label="Mobile">{c.nav.map((item,i)=><a href={`#${sectionIds[i]}`}>{item}</a>)}</nav></details>
+</header>
+</div>
+<main id="main">
+<section class="hero hero--editorial" id="home">
+  <!-- Background photograph is independently replaceable in src/data/media.ts. -->
+  <div class="hero-photo" aria-hidden="true"><Media media={media.hero} fallback="" eager/></div>
+  <div class="hero-photo-blend" aria-hidden="true"></div>
+  <div class="hero-peach-shape" aria-hidden="true"></div>
+  <div class="shell hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">{c.hero.eyebrow}</p>
+      <h1>{lang === 'en' ? <>More than<br/>one title.</> : <>Más que<br/>un título.</>}<em>{c.hero.accent}</em></h1>
+      <p class="lead">{c.hero.description}</p>
+      <div class="hero-actions">
+        <a class="button" href="#contact">
+          {c.hero.contactCta}
+          <span aria-hidden="true">→</span>
+        </a>
+
+        <a class="button button--outline" href="#about">
+          {c.hero.aboutCta}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scribble" aria-hidden="true">Real Estate<br/>Notary<br/>Lifestyle<br/>Entrepreneurship <span>♡</span></div>
+  <svg class="hero-wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 8 C160 52 300 59 460 42 S760 49 920 54 S1190 60 1440 55" /></svg>
+</section>
+<div class="quick-links shell"><a href="#services"><span class="quick-icon">⌂</span><strong>{lang==='en'?'BUY & SELL':'COMPRA Y VENTA'}</strong><small>{lang==='en'?'Your goals, my priority.':'Tus metas, mi prioridad.'}</small></a><a href="#services"><span class="quick-icon red">▤</span><strong>{lang==='en'?'NOTARY SERVICES':'NOTARÍA'}</strong><small>{lang==='en'?'Fast, reliable, convenient.':'Rápido, confiable y práctico.'}</small></a><a href="#services"><span class="quick-icon orange">♧</span><strong>{lang==='en'?'RESOURCES':'RECURSOS'}</strong><small>{lang==='en'?'Tools for every stage.':'Ideas para cada etapa.'}</small></a><a href="#life"><span class="quick-icon">♡</span><strong>LIFESTYLE</strong><small>{lang==='en'?'Favorites, events and more.':'Favoritos, eventos y más.'}</small></a></div>
+<section class="about" id="about"><div class="about-inner shell"><div class="about-mobile-heading"><p class="eyebrow">{c.about.eyebrow}</p><h2>{c.about.title}</h2></div><div class="about-media"><Media media={media.about} fallback="Paulina"/></div><div class="about-copy"><p class="eyebrow">{c.about.eyebrow}</p><h2>{c.about.title}</h2><p>{c.about.description}</p><p>{c.about.second}</p><div class="link-row"><a class="button" href="#services">{c.about.cta} →</a>{site.contact.youtube && <a class="text-link" href={site.contact.youtube} target="_blank" rel="noopener noreferrer">YouTube ↗</a>}</div></div></div>
+<aside class="paulina-quote" aria-label={lang === 'en' ? 'A thought from Paulina' : 'Una reflexión de Paulina'}>
+  <div class="shell paulina-quote-inner">
+    <span class="paulina-quote-mark" aria-hidden="true">“</span>
+    <blockquote>{c.quote}</blockquote>
+    <p>— Paulina Loera</p>
+  </div>
+</aside>
+</section>
+<section class="section services shell" id="services"><p class="eyebrow">{c.services.eyebrow}</p><h2>{c.services.title}</h2><p class="intro">{c.services.intro}</p><div class="cards">{c.services.items.map((item,i)=><article class="service-card"><div class="service-photo"><Media media={media.services[i]} fallback={item.title}/></div><h3>{item.title}</h3><p>{item.description}</p>{(i===2?site.contact.alphaKey:item.url) && <a class="text-link" href={i===2?site.contact.alphaKey:item.url} target="_blank" rel="noopener noreferrer">{lang==='en'?'LEARN MORE':'CONOCE MÁS'} →</a>}</article>)}</div></section>
+
+<section class="life-editorial" id="life">
+  <div class="life-editorial-inner shell">
+
+    <div class="life-editorial-copy">
+      <p class="eyebrow">
+        {lang === 'en' ? 'LIFESTYLE' : 'ESTILO DE VIDA'}
+      </p>
+
+      <h2>
+        {lang === 'en'
+          ? <>The good life<br/>is a choice.</>
+          : <>La buena vida<br/>se elige.</>}
+      </h2>
+
+      <p>{c.life.description}</p>
+
+      {site.contact.instagram && (
+        <a
+          class="button"
+          href={site.contact.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {lang === 'en' ? 'FOLLOW MY JOURNEY' : 'SIGUE MI HISTORIA'} →
+        </a>
+      )}
+    </div>
+
+    <div class="polaroids">
+      {media.life.map((item, i) => (
+        <div class={`polaroid polaroid-${i + 1}`}>
+          <Media
+            media={item}
+            fallback={c.life.items[i]?.title || 'Lifestyle'}
+          />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<section class="contact" id="contact"><div class="shell contact-inner"><p class="eyebrow">{c.contact.eyebrow}</p><h2>{c.contact.title}</h2><p>{c.contact.description}</p>{site.contact.email ? <a class="button" href={`mailto:${site.contact.email}`}>{c.contact.cta} →</a> : <span class="contact-pending">{lang==='en'?'Contact information coming soon.':'Datos de contacto próximamente.'}</span>}</div></section>
+</main>
+<footer class="footer shell"><div class="footer-brand">
+  <img
+    src={site.brand.footerLogo}
+    alt="PAUWERFUL by Paulina"
+    width="240"
+    height="90"
+    loading="lazy"
+  />
+</div><div class="footer-middle">Power in who you are.<br/>Style in how you live.<div class="social" aria-label={lang === 'en' ? 'Social media' : 'Redes sociales'}>
+  {site.contact.instagram && <a href={site.contact.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg></a>}
+  {site.contact.facebook && <a href={site.contact.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.6 21v-8h2.7l.4-3.2h-3.1V7.7c0-.9.3-1.5 1.6-1.5h1.7V3.3c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.4v2.2H7.5V13h2.7v8z"/></svg></a>}
+  {site.contact.pinterest && <a href={site.contact.pinterest} target="_blank" rel="noopener noreferrer" aria-label="Pinterest" title="Pinterest"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.4 18.7c.6-1.6 1.4-5.2 1.4-5.2s-.4-.8-.4-1.9c0-1.8 1-3.1 2.3-3.1 1.1 0 1.6.8 1.6 1.8 0 1.1-.7 2.7-1.1 4.2-.3 1.2.6 2.1 1.7 2.1 2.1 0 3.5-2.2 3.5-5.3 0-2.8-2-4.7-4.8-4.7-3.3 0-5.3 2.4-5.3 5 0 1 .4 2 1.1 2.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>}
+  {site.contact.tiktok && <a href={site.contact.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.3 3c.3 2.6 1.8 4.2 4.5 4.4v3.1a8.2 8.2 0 0 1-4.5-1.3v6.1a5.5 5.5 0 1 1-5.5-5.5h.6v3.1a2.4 2.4 0 1 0 1.8 2.4V3z" fill="currentColor"/></svg></a>}
+  {site.contact.linkedin && <a href={site.contact.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9h3v11H4zm1.5-5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9h3v1.5c.6-1 1.6-1.8 3.4-1.8 3.1 0 3.6 2 3.6 4.6V20h-3v-6c0-1.5-.3-2.5-1.8-2.5-1.4 0-2.2 1-2.2 2.5v6h-3z"/></svg></a>}
+  {site.contact.youtube && <a href={site.contact.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m10 9 6 3-6 3z" fill="currentColor"/></svg></a>}
+</div></div><div class="footer-right"><nav aria-label="Footer">{c.nav.map((item,i)=><a href={`#${sectionIds[i]}`}>{item}</a>)}</nav><small>© {new Date().getFullYear()} PAULINA. ALL RIGHTS RESERVED.</small></div>
+  
+<div class="footer-legal">
+  <div class="footer-legal-agent">
+    <span>{site.realEstate.agentName}</span>
+    <span> · {site.realEstate.agentTitle}</span>
+  </div>
+
+  <div class="footer-legal-brokerage">
+    {site.realEstate.brokerageLabel}{' '}
+    {site.realEstate.brokerageName}
+  </div>
+
+  <div class="footer-legal-links">
+    <a
+      href={site.realEstate.documents.iabs}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Information About Brokerage Services
+    </a>
+    <a
+      href={site.realEstate.documents.consumerProtection}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Consumer Protection Notice
+    </a>
+  </div>
+</div>
+
+</footer>
+
