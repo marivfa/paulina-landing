@@ -1,0 +1,99 @@
+---
+import type { content } from '../data/content';
+interface Props {
+  lang: 'en' | 'es';
+  form: (typeof content)['en']['contact']['form'] | (typeof content)['es']['contact']['form'];
+}
+const { lang, form } = Astro.props;
+const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
+
+---
+<form class="contact-form" data-contact-form action="https://api.web3forms.com/submit" method="POST" data-lang={lang} data-sending={form.sending} data-success={form.success} data-error={form.error}>
+  <input type="hidden" name="access_key" value={key} />
+  <input type="hidden" name="subject" value="New inquiry | Paulina Loera" />
+  <input type="hidden" name="from_name" value="Paulina Loera Website" />
+  <input type="hidden" name="Website language" value={lang} />
+  <div class="contact-honeypot" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" /></div>
+  <div class="contact-form-grid">
+    <div class="contact-field"><label for={`name-${lang}`}>{form.name} *</label><input id={`name-${lang}`} name="name" type="text" autocomplete="name" placeholder={form.namePlaceholder} maxlength="120" required /></div>
+    <div class="contact-field"><label for={`email-${lang}`}>{form.email} *</label><input id={`email-${lang}`} name="email" type="email" autocomplete="email" placeholder={form.emailPlaceholder} maxlength="254" required /></div>
+    <div class="contact-field contact-field--full"><label for={`phone-${lang}`}>{form.phone}</label><input id={`phone-${lang}`} name="phone" type="tel" autocomplete="tel" placeholder={form.phonePlaceholder} maxlength="30" /></div>
+  </div>
+  <div class="contact-form-grid contact-form-selects">
+  <div class="contact-field">
+    <label for={`inquiry-${lang}`}>{form.inquiry} *</label>
+    <select id={`inquiry-${lang}`} name="Inquiry type" required>
+      <option value="" disabled selected>—</option>
+      {Object.entries(form.inquiryOptions).map(([value, label]) => (
+        <option value={label}>{label}</option>
+      ))}
+    </select>
+  </div>
+
+  <div class="contact-field">
+    <label for={`language-${lang}`}>{form.preferredLanguage} *</label>
+    <select id={`language-${lang}`} name="Preferred language" required>
+      <option value="" disabled selected>—</option>
+      {Object.entries(form.languageOptions).map(([value, label]) => (
+        <option value={label}>{label}</option>
+      ))}
+    </select>
+  </div>
+</div>
+  <div class="contact-field"><label for={`message-${lang}`}>{form.message}</label><textarea id={`message-${lang}`} name="message" rows="4" maxlength="3000" placeholder={form.messagePlaceholder}></textarea></div>
+  <label class="contact-option contact-consent"><input type="checkbox" name="Contact consent" value="Yes" required /><span>{form.consent}</span></label>
+  
+  <div class="contact-captcha">
+  <div
+    class="h-captcha"
+    data-captcha="true"
+    data-theme="light"
+  ></div>
+</div>
+  
+  <button type="submit" class="button contact-submit" disabled={!key}>{form.submit} →</button>
+  <p class="contact-form-status" role="status" aria-live="polite" data-form-status></p>
+</form>
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form => {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (!status || !button) return;
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const captchaResponse = form.querySelector(
+    '[name="h-captcha-response"]'
+    );
+
+    if (!captchaResponse?.value) {
+    status.textContent = spanish
+        ? 'Por favor, completa la verificación de seguridad.'
+        : 'Please complete the security verification.';
+    return;
+    }  
+
+      const messages = { sending: form.dataset.sending || '', success: form.dataset.success || '', error: form.dataset.error || '' };
+      button.disabled = true;
+      status.textContent = messages.sending;
+      try {
+        const response = await fetch(form.action, { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error('Submission failed');
+        form.reset();
+        if (window.hcaptcha) {
+        window.hcaptcha.reset();
+        }
+        status.textContent = messages.success;
+      } catch { status.textContent = messages.error; }
+      finally { button.disabled = false; }
+    });
+  });
+</script>
+<script
+  is:inline
+  src="https://web3forms.com/client/script.js"
+  async
+  defer
+></script>

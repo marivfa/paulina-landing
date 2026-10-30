@@ -72,7 +72,7 @@
   background-color: var(--ivory);
   background-image: url('/media/backgrounds/lifestyle-bg.png');
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center bottom;
   background-size: cover;
 }
 
@@ -386,3 +386,116 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+
+/* ==========================================
+   LET'S CONNECT — CONTACT FORM ONLY
+   ========================================== */
+.contact .contact-form {
+  width: min(100%, 690px);
+  margin: 2.2rem auto 0;
+  padding: clamp(1.35rem, 3vw, 2.4rem);
+  box-sizing: border-box;
+  background: var(--ivory);
+  color: var(--ink-heading);
+  text-align: left;
+  border-radius: 8px;
+}
+.contact .contact-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.1rem; }
+.contact .contact-field--full { grid-column:1/-1; }
+.contact .contact-field { display:flex; flex-direction:column; gap:.45rem; margin-bottom:1.15rem; min-width:0; }
+.contact .contact-field label,
+.contact .contact-fieldset legend { font:600 .7rem/1.5 Montserrat,sans-serif; color:var(--ink-heading); letter-spacing:.015em; }
+.contact .contact-field input,
+.contact .contact-field textarea {
+  width:100%; box-sizing:border-box; border:1px solid var(--quote-rule);
+  border-radius:3px; padding:.8rem .9rem; background:var(--white);
+  color:var(--ink-heading); font:400 .82rem/1.5 Montserrat,sans-serif;
+}
+.contact .contact-field textarea { resize:vertical; min-height:105px; }
+.contact .contact-field input:focus-visible,
+.contact .contact-field textarea:focus-visible,
+.contact .contact-option input:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+.contact .contact-fieldset { margin:0 0 1.35rem; padding:0; border:0; min-width:0; }
+.contact .contact-fieldset legend { margin-bottom:.75rem; }
+.contact .contact-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem 1rem; }
+.contact .contact-options--inline { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.contact .contact-option { display:flex; align-items:flex-start; gap:.55rem; font:400 .76rem/1.5 Montserrat,sans-serif; color:var(--text-body); cursor:pointer; }
+.contact .contact-option input { flex:none; width:15px; height:15px; margin:.12rem 0 0; accent-color:var(--teal); }
+.contact .contact-consent { margin:.3rem 0 1.5rem; }
+.contact .contact-submit { cursor:pointer; font-family:Montserrat,sans-serif; }
+.contact .contact-submit:disabled { opacity:.55; cursor:not-allowed; }
+.contact .contact-form-status { min-height:1.3em; margin:.8rem 0 0; font-size:.75rem; line-height:1.5; color:var(--ink-heading); }
+.contact .contact-honeypot { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+
+/* Contact form — select fields */
+.contact .contact-field select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--quote-rule);
+  border-radius: 3px;
+  padding: .8rem .9rem;
+  background: var(--white);
+  color: var(--ink-heading);
+  font: 400 .82rem/1.5 Montserrat, sans-serif;
+  cursor: pointer;
+}
+
+.contact .contact-field select:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+ /* Contact form — hCaptcha */
+.contact .contact-captcha {
+  display: flex;
+  justify-content: flex-start;
+  margin: 1rem 0 1.5rem;
+  min-height: 78px;
+}
+/* Pauwerful — independent section immediately after Lifestyle */
+.pauwerful-feature {
+  position: relative;
+  isolation: isolate;
+  background: var(--ivory);
+  text-align: center;
+  padding: clamp(3.75rem, 6vw, 5.5rem) 1.5rem;
+}
+.pauwerful-feature-inner { max-width: 690px; margin-inline: auto; }
+.pauwerful-feature .eyebrow { color: var(--terra); }
+.pauwerful-feature-logo {
+  display: block;
+  width: min(75%, 260px);
+  height: auto;
+  max-height: 110px;
+  object-fit: contain;
+  margin: 1.25rem auto 1.5rem;
+}
+.pauwerful-feature-tagline {
+  color: var(--ink-heading);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.5;
+}
+.pauwerful-feature-description {
+  max-width: 550px;
+  margin: 1rem auto 1.8rem;
+  color: var(--text-body);
+  font-size: .82rem;
+  line-height: 1.8;
+}
+.pauwerful-feature .button { display: inline-flex; align-items: center; justify-content: center; }
+
+/* Lifestyle — subtle Instagram link */
+.life-editorial-instagram-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--terra);
+  font: 700 .68rem/1.5 Montserrat, sans-serif;
+  letter-spacing: .1em;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: .25rem;
+  transition: color .2s ease;
+}
+.life-editorial-instagram-link:hover { color: var(--ink-heading); }

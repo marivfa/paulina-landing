@@ -457,6 +457,7 @@
   /* Lifestyle: large, readable photographs in a vertical editorial gallery. */
   .life-editorial-inner { padding-block: 3rem 3.25rem; }
   .life-editorial-copy { padding: 0; }
+  
   .polaroids { display: flex; flex-direction: column; align-items: center;
     gap: 1.5rem; height: auto; min-height: 0; margin-top: 2rem; padding: .5rem 0 1rem; }
   .polaroid { position: relative; left: auto; right: auto; top: auto;
@@ -514,4 +515,20 @@
 /* En laptops estrechas evitamos superponer el manuscrito sobre Paulina. */
 @media (min-width: 551px) and (max-width: 1240px) {
   .hero--editorial .hero-scribble { display: none; }
+}
+
+
+/* LET'S CONNECT — FORM RESPONSIVENESS ONLY */
+@media (max-width: 550px) {
+  .contact .contact-form { padding:1.3rem 1.05rem; margin-top:1.7rem; }
+  .contact .contact-form-grid,
+  .contact .contact-options,
+  .contact .contact-options--inline { grid-template-columns:minmax(0,1fr); }
+  .contact .contact-field--full { grid-column:auto; }
+}
+
+@media (max-width: 780px) {
+  .life-editorial {
+    background-position: center center;
+  }
 }

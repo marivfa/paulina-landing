@@ -50,6 +50,20 @@
 .quick-links strong{margin-top:.3rem;font-size:.62rem;letter-spacing:.17em}
 .quick-links small{margin-top:.15rem;font-size:.69rem;color:var(--text-body)}
 
+/* Quick links — illustrated icons */
+.quick-links .quick-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-links .quick-icon img {
+  display: block;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
 .hero-actions {
   display: flex;
   align-items: center;
