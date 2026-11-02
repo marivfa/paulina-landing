@@ -23,5 +23,5 @@ export const site = {
     },
   },
   media,
-  location: '', // Add actual service area once confirmed for local SEO
+  location: 'Dallas–Fort Worth, Texas',
 };

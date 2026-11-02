@@ -6,6 +6,18 @@ const prefix = import.meta.env.BASE_URL.replace(/\/$/, '');
 const enUrl = `${origin}${prefix}/`;
 const esUrl = `${origin}${prefix}/es/`;
 const currentUrl = lang === 'en' ? enUrl : esUrl;
+const fullTitle = `${title} | Paulina Loera`;
+const socialImage = `${origin}${prefix}/media/images/hero-horizontal.jpg`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Paulina Loera',
+  url: enUrl,
+  description,
+  jobTitle: lang === 'en' ? 'Real Estate Agent' : 'Agente inmobiliaria',
+  worksFor: { '@type': 'Organization', name: 'Alpha Key Realty LLC', url: 'https://alphakeyrealty.com/' },
+  areaServed: { '@type': 'Place', name: 'Dallas–Fort Worth, Texas' },
+};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -14,15 +26,25 @@ const currentUrl = lang === 'en' ? enUrl : esUrl;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F7F5F2" />
-    <title>{title} | Paulina</title>
+    <title>{fullTitle}</title>
     <link rel="canonical" href={currentUrl} />
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="es" href={esUrl} />
     <link rel="alternate" hreflang="x-default" href={enUrl} />
-    <meta property="og:title" content={`${title} | Paulina`} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={currentUrl} />
+    <meta property="og:site_name" content="Paulina Loera" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_US'} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'es_US' : 'en_US'} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Paulina Loera — Real Estate, Notary & Lifestyle" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body><slot /></body>
 </html>
