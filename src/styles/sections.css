@@ -499,3 +499,26 @@
   transition: color .2s ease;
 }
 .life-editorial-instagram-link:hover { color: var(--ink-heading); }
+
+/* Notary Public disclosure — follows the services cards, using existing brand tokens. */
+.notary-disclosure {
+  max-width: 850px;
+  margin: 2.2rem auto 0;
+  padding: clamp(1.2rem, 2.5vw, 2rem);
+  border: 1px solid var(--quote-rule);
+  border-radius: 6px;
+  background: var(--ivory);
+  text-align: left;
+}
+.notary-disclosure h3 {
+  margin: 0 0 1rem;
+  color: var(--ink-heading);
+  font: 700 .75rem/1.5 Montserrat, sans-serif;
+  letter-spacing: .07em;
+}
+.notary-disclosure p {
+  margin: .8rem 0 0;
+  color: var(--text-body);
+  font: 400 .8rem/1.7 Montserrat, sans-serif;
+}
+.notary-disclosure p + p { border-top: 1px solid var(--quote-rule); padding-top: .85rem; }

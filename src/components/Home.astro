@@ -67,7 +67,31 @@ const media=site.media;
   </div>
 </aside>
 </section>
-<section class="section services shell" id="services"><p class="eyebrow">{c.services.eyebrow}</p><h2>{c.services.title}</h2><p class="intro">{c.services.intro}</p><div class="cards">{c.services.items.map((item,i)=><article class="service-card"><div class="service-photo"><Media media={media.services[i]} fallback={item.title}/></div><h3>{item.title}</h3><p>{item.description}</p>{(i===2?site.contact.alphaKey:item.url) && <a class="text-link" href={i===2?site.contact.alphaKey:item.url} target="_blank" rel="noopener noreferrer">{lang==='en'?'LEARN MORE':'CONOCE MÁS'} →</a>}</article>)}</div></section>
+<section class="section services shell" id="services">
+  <p class="eyebrow">{c.services.eyebrow}</p>
+  <h2>{c.services.title}</h2>
+  <p class="intro">{c.services.intro}</p>
+  <div class="cards">
+    {c.services.items.map((item,i)=><article class="service-card">
+      <div class="service-photo"><Media media={media.services[i]} fallback={item.title}/></div>
+      <h3>{item.title}</h3>
+      <p>{item.description}</p>
+      {i === 1 ? (
+        <a class="text-link" href="#contact" data-notary-cta>{lang === 'en' ? 'CONTACT ME' : 'CONTÁCTAME'} →</a>
+      ) : (i === 2 ? site.contact.alphaKey : item.url) && (
+        <a class="text-link" href={i === 2 ? site.contact.alphaKey : item.url} target="_blank" rel="noopener noreferrer">
+          {lang === 'en' ? 'LEARN MORE' : 'CONOCE MÁS'} →
+        </a>
+      )}
+    </article>)}
+  </div>
+  <aside class="notary-disclosure" aria-labelledby="notary-disclosure-title">
+    <h3 id="notary-disclosure-title">{c.services.notaryNotice.title}</h3>
+    <p lang="en">{c.services.notaryNotice.englishStatement}</p>
+    {lang === 'es' && <p lang="es">{c.services.notaryNotice.spanishStatement}</p>}
+    <!-- PENDING: Add Paulina-approved statutory notary fee schedule before considering the Spanish-language advertising disclosure complete. -->
+  </aside>
+</section>
 
 <section class="life-editorial" id="life">
   <div class="life-editorial-inner shell">
@@ -180,6 +204,24 @@ const media=site.media;
 
 
 <script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-notary-cta]').forEach(link => {
+    link.addEventListener('click', () => {
+      const radio = document.querySelector<HTMLInputElement>('#contact input[type="radio"][name="Inquiry type"][value="notary"]');
+      if (radio) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+        return;
+      }
+      const select = document.querySelector<HTMLSelectElement>('#contact select[name="Inquiry type"]');
+      const option = select && Array.from(select.options).find(item =>
+        item.value.toLowerCase().includes('notary') || item.textContent?.toLowerCase().includes('notary')
+      );
+      if (select && option) {
+        select.value = option.value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
   document.querySelectorAll<HTMLAnchorElement>('[data-pauwerful-cta]').forEach(link => {
     link.addEventListener('click', () => {
       const select = document.querySelector<HTMLSelectElement>('#contact select[name="Inquiry type"]');
