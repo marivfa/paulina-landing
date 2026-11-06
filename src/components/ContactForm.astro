@@ -56,6 +56,7 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
 </form>
 <script>
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form => {
+    const spanish = form.dataset.lang === 'es';
     const status = form.querySelector<HTMLElement>('[data-form-status]');
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (!status || !button) return;
@@ -63,9 +64,7 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
       event.preventDefault();
       if (!form.reportValidity()) return;
 
-      const captchaResponse = form.querySelector(
-    '[name="h-captcha-response"]'
-    );
+      const captchaResponse = form.querySelector<HTMLInputElement>('[name="h-captcha-response"]');
 
     if (!captchaResponse?.value) {
     status.textContent = spanish
@@ -82,9 +81,8 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
         const result = await response.json();
         if (!response.ok || !result.success) throw new Error('Submission failed');
         form.reset();
-        if (window.hcaptcha) {
-        window.hcaptcha.reset();
-        }
+        const captcha = (window as Window & { hcaptcha?: { reset: () => void } }).hcaptcha;
+        captcha?.reset();
         status.textContent = messages.success;
       } catch { status.textContent = messages.error; }
       finally { button.disabled = false; }

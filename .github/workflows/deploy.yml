@@ -24,6 +24,8 @@ jobs:
 
       - name: Build Astro website
         uses: withastro/action@v5
+        env:
+          PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.PUBLIC_WEB3FORMS_ACCESS_KEY }}
 
   deploy:
     needs: build
