@@ -52,7 +52,7 @@
 .section{padding:3.3rem 0 3.5rem;text-align:center; padding-top: 5rem; padding-bottom: 6rem;}
 .intro{max-width:650px;margin:0 auto 1.2rem;color:var(--text-body);font-size:.78rem}
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.1rem}
-.service-photo{height:150px;overflow:hidden}
+.service-photo{height:250px;overflow:hidden}
 .service-photo img,.life-photo img{transition:transform .4s}
 .service-card:hover img,.life-card:hover img{transform:scale(1.035)}
 .service-card h3{font:700 .7rem Montserrat;letter-spacing:.18em;text-transform:uppercase;margin:.8rem 0 .3rem}
@@ -522,3 +522,4 @@
   font: 400 .8rem/1.7 Montserrat, sans-serif;
 }
 .notary-disclosure p + p { border-top: 1px solid var(--quote-rule); padding-top: .85rem; }
+
