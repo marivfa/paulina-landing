@@ -18,7 +18,7 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
     <div class="contact-field"><label for={`first-name-${lang}`}>{lang === 'es' ? 'Nombre' : 'First name'} *</label><input id={`first-name-${lang}`} name="first_name" type="text" autocomplete="given-name" maxlength="80" required /></div>
     <div class="contact-field"><label for={`last-name-${lang}`}>{lang === 'es' ? 'Apellido' : 'Last name'} *</label><input id={`last-name-${lang}`} name="last_name" type="text" autocomplete="family-name" maxlength="80" required /></div>
     <div class="contact-field"><label for={`email-${lang}`}>{form.email} *</label><input id={`email-${lang}`} name="email" type="email" autocomplete="email" placeholder={form.emailPlaceholder} maxlength="254" required /></div>
-    <div class="contact-field contact-field--full"><label for={`phone-${lang}`}>{form.phone}</label><input id={`phone-${lang}`} name="phone" type="tel" autocomplete="tel" placeholder={form.phonePlaceholder} maxlength="30" /></div>
+    <div class="contact-field"><label for={`phone-${lang}`}>{form.phone}</label><input id={`phone-${lang}`} name="phone" type="tel" autocomplete="tel" placeholder={form.phonePlaceholder} maxlength="30" /></div>
   </div>
   <div class="contact-form-grid contact-form-selects">
   <div class="contact-field">
