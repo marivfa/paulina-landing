@@ -87,7 +87,15 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
       button.disabled = true;
       status.textContent = messages.sending;
       try {
-        const response = await fetch(form.action, { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(Object.fromEntries(new FormData(form).entries())) });
+        const payload = Object.fromEntries(new FormData(form).entries());
+        // Parsing test: preserve Web3Forms' required lowercase fields and
+        // add Wise Agent-style labels only for real estate inquiries.
+        if (isRealEstate) {
+          payload['Name'] = payload['name'] || '';
+          payload['Email'] = payload['email'] || '';
+          payload['Phone'] = payload['phone'] || '';
+        }
+        const response = await fetch(form.action, { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(payload) });
         const result = await response.json();
         if (!response.ok || !result.success) throw new Error('Submission failed');
         form.reset();
