@@ -98,6 +98,9 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
         // labels that were recognized in the previous test.
         if (isRealEstate) {
           payload['Name'] = payload.name;
+          // Avoid sending the same full name twice in Web3Forms notifications.
+          // This is a test: Web3Forms may rely on lowercase 'name'.
+          delete payload.name;
           payload['Email'] = payload.email || '';
           payload['Phone'] = payload.phone || '';
           // Avoid duplicating the separate name fields in the email body.
