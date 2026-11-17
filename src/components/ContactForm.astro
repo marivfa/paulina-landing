@@ -15,7 +15,8 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
   <input type="hidden" name="Website language" value={lang} />
   <div class="contact-honeypot" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" /></div>
   <div class="contact-form-grid">
-    <div class="contact-field"><label for={`name-${lang}`}>{form.name} *</label><input id={`name-${lang}`} name="name" type="text" autocomplete="name" placeholder={form.namePlaceholder} maxlength="120" required /></div>
+    <div class="contact-field"><label for={`first-name-${lang}`}>{lang === 'es' ? 'Nombre' : 'First name'} *</label><input id={`first-name-${lang}`} name="first_name" type="text" autocomplete="given-name" maxlength="80" required /></div>
+    <div class="contact-field"><label for={`last-name-${lang}`}>{lang === 'es' ? 'Apellido' : 'Last name'} *</label><input id={`last-name-${lang}`} name="last_name" type="text" autocomplete="family-name" maxlength="80" required /></div>
     <div class="contact-field"><label for={`email-${lang}`}>{form.email} *</label><input id={`email-${lang}`} name="email" type="email" autocomplete="email" placeholder={form.emailPlaceholder} maxlength="254" required /></div>
     <div class="contact-field contact-field--full"><label for={`phone-${lang}`}>{form.phone}</label><input id={`phone-${lang}`} name="phone" type="tel" autocomplete="tel" placeholder={form.phonePlaceholder} maxlength="30" /></div>
   </div>
@@ -88,12 +89,18 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
       status.textContent = messages.sending;
       try {
         const payload = Object.fromEntries(new FormData(form).entries());
-        // Parsing test: preserve Web3Forms' required lowercase fields and
-        // add Wise Agent-style labels only for real estate inquiries.
+        const firstName = String(payload.first_name || '').trim();
+        const lastName = String(payload.last_name || '').trim();
+        // Keep Web3Forms' conventional name field without asking visitors to enter it twice.
+        payload.name = `${firstName} ${lastName}`.trim();
+        // Parsing test: add Wise Agent's suggested field labels for real estate inquiries.
+        // Web3Forms may still render these as extra email fields rather than parser-ready lines.
         if (isRealEstate) {
-          payload['Name'] = payload['name'] || '';
-          payload['Email'] = payload['email'] || '';
-          payload['Phone'] = payload['phone'] || '';
+          payload['First Name'] = firstName;
+          payload['Last Name'] = lastName;
+          payload['Name'] = payload.name;
+          payload['Email'] = payload.email || '';
+          payload['Phone'] = payload.phone || '';
         }
         const response = await fetch(form.action, { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(payload) });
         const result = await response.json();
