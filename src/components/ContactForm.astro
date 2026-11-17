@@ -25,7 +25,7 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
     <select id={`inquiry-${lang}`} name="Inquiry type" required>
       <option value="" disabled selected>—</option>
       {Object.entries(form.inquiryOptions).map(([value, label]) => (
-        <option value={label}>{label}</option>
+        <option value={label} data-inquiry-key={value}>{label}</option>
       ))}
     </select>
   </div>
@@ -72,6 +72,16 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
         : 'Please complete the security verification.';
     return;
     }  
+
+      const inquirySelect = form.querySelector<HTMLSelectElement>('select[name="Inquiry type"]');
+      const inquiryKey = inquirySelect?.selectedOptions[0]?.dataset.inquiryKey;
+      const isRealEstate = inquiryKey === 'buying' || inquiryKey === 'selling' || inquiryKey === 'investment';
+      const subject = form.querySelector<HTMLInputElement>('input[name="subject"]');
+      if (subject) {
+        subject.value = isRealEstate
+          ? 'Real Estate Leads - Paulina Loera'
+          : 'New inquiry | Paulina Loera';
+      }
 
       const messages = { sending: form.dataset.sending || '', success: form.dataset.success || '', error: form.dataset.error || '' };
       button.disabled = true;

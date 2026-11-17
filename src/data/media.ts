@@ -14,3 +14,31 @@ export const media = {
     { type: 'image', src: '/media/images/life-03.jpg', alt: 'Everyday style' }
   ]
 } as const;
+
+
+/*
+Config about me 
+----- Solo foto ---
+about: {
+  type: 'image',
+  src: '/media/images/about.jpg',
+  alt: 'Paulina — about portrait'
+}
+
+--- Video local --- 
+about: {
+  type: 'video',
+  src: '/media/videos/paulina-intro.mp4',
+  poster: '/media/images/about.jpg',
+  alt: 'Paulina — introduction video',
+  autoplay: false
+}
+
+--- Video Youtube ---
+about: {
+  type: 'youtube',
+  src: 'https://www.youtube.com/watch?v=XXXXXXXXXXX',
+  poster: '/media/images/about.jpg',
+  alt: 'Paulina — introduction video'
+}
+*/
