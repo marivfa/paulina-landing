@@ -93,14 +93,16 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
         const lastName = String(payload.last_name || '').trim();
         // Keep Web3Forms' conventional name field without asking visitors to enter it twice.
         payload.name = `${firstName} ${lastName}`.trim();
-        // Parsing test: add Wise Agent's suggested field labels for real estate inquiries.
-        // Web3Forms may still render these as extra email fields rather than parser-ready lines.
+        // Keep the original Web3Forms fields for delivery and reply handling.
+        // For the Wise Agent parsing test, send only the three additional
+        // labels that were recognized in the previous test.
         if (isRealEstate) {
-          payload['First Name'] = firstName;
-          payload['Last Name'] = lastName;
           payload['Name'] = payload.name;
           payload['Email'] = payload.email || '';
           payload['Phone'] = payload.phone || '';
+          // Avoid duplicating the separate name fields in the email body.
+          delete payload.first_name;
+          delete payload.last_name;
         }
         const response = await fetch(form.action, { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(payload) });
         const result = await response.json();
