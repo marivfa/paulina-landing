@@ -103,6 +103,16 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
           delete payload.name;
           payload['Email'] = payload.email || '';
           payload['Phone'] = payload.phone || '';
+          // Send exact existing Wise Agent labels for parsing verification.
+          const categoryMap: Record<string, string> = {
+            buying: 'Buyer',
+            selling: 'Seller',
+            investment: 'Investor',
+          };
+          if (inquiryKey && categoryMap[inquiryKey]) {
+            payload['Category'] = categoryMap[inquiryKey];
+          }
+          payload['Lead Source'] = 'Paulina Website';
           // Avoid duplicating the separate name fields in the email body.
           delete payload.first_name;
           delete payload.last_name;
