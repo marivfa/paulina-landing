@@ -88,23 +88,22 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
       button.disabled = true;
       status.textContent = messages.sending;
       try {
-        const formData = Object.fromEntries(new FormData(form).entries());
-        const firstName = String(formData.first_name || '').trim();
-        const lastName = String(formData.last_name || '').trim();
-        const fullName = `${firstName} ${lastName}`.trim();
-
-        // One canonical field per value: name, email and phone.
-        // Keep the visitor-facing first/last name inputs separate.
-        // Preserve Web3Forms metadata and the existing form details.
-        const { first_name, last_name, name, email, phone, ...otherFields } = formData;
-        const payload: Record<string, FormDataEntryValue | string> = {
-          ...otherFields,
-          name: fullName,
-          email: String(email || '').trim(),
-          phone: String(phone || '').trim(),
-        };
-
+        const payload = Object.fromEntries(new FormData(form).entries());
+        const firstName = String(payload.first_name || '').trim();
+        const lastName = String(payload.last_name || '').trim();
+        // Keep Web3Forms' conventional name field without asking visitors to enter it twice.
+        payload.name = `${firstName} ${lastName}`.trim();
+        // Keep the original Web3Forms fields for delivery and reply handling.
+        // For the Wise Agent parsing test, send only the three additional
+        // labels that were recognized in the previous test.
         if (isRealEstate) {
+          payload['Name'] = payload.name;
+          // Avoid sending the same full name twice in Web3Forms notifications.
+          // This is a test: Web3Forms may rely on lowercase 'name'.
+          delete payload.name;
+          payload['Email'] = payload.email || '';
+          payload['Phone'] = payload.phone || '';
+          // Send exact existing Wise Agent labels for parsing verification.
           const categoryMap: Record<string, string> = {
             buying: 'Buyer',
             selling: 'Seller',
@@ -114,6 +113,9 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || '';
             payload['Category'] = categoryMap[inquiryKey];
           }
           payload['Lead Source'] = 'Paulina Website';
+          // Avoid duplicating the separate name fields in the email body.
+          delete payload.first_name;
+          delete payload.last_name;
         }
         const response = await fetch(form.action, { method:'POST', headers:{ 'Content-Type':'application/json', Accept:'application/json' }, body:JSON.stringify(payload) });
         const result = await response.json();
